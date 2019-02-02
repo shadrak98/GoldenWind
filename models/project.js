@@ -4,21 +4,16 @@ var mongoose = require('mongoose');
 //schema for users
 var ProjectSchema = new mongoose.Schema({
     proj_name : String,
-    creators : [{
-        type : String
-    }],
-    donators : {
-        did : [{
-            type : String
-        }],
-        amount : [{
-            type : Number
-        }]
-    },
+    creator : String,
+    donators : [{did : String, amount : Number}],
     goal : Number,
     received : Number,
-    timer_vot : Date,
-    timer_fund : Date,
+    timer_vot : String,
+    timer_fund : String,
+    success : {
+        type : String,
+        default : false
+    }, 
     back_ins : Number 
 });
 

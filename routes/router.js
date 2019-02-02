@@ -1,7 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
+var Escrow = require('../models/escrow');
+var Project = require('../models/project');
 var path = require("path");
+
+
+
 
 // GET route for reading data
 router.get('/', function (req, res, next) {
@@ -55,7 +60,7 @@ router.post('/register',function(req,res,next){
 
 // GET route after registering
 router.get('/main', function (req, res, next) {
-    User.findById(req.session.userId)
+    User.findById(req.session.userId,'-password')
       .exec(function (error, user) {
         if (error) {
           return next(error);
@@ -65,7 +70,16 @@ router.get('/main', function (req, res, next) {
             err.status = 400;
             return next(err);
           } else {
-            return res.sendFile(path.join(__dirname + '/views/main.html'))
+            Project.find({creator:req.session.userId},(error, projs)=>{
+                if(error){
+                    return res.status(500).send({ message: 'Something went wrong' });
+                }
+                else{
+                    
+                    return res.send(projs);
+                    //return res.render(main.html,projs,user);
+                }
+            })
           }
         }
       });
@@ -86,25 +100,82 @@ router.get('/logout', function (req, res, next) {
   });
 
 
-//creating new project
-router.get('/projects',function(req,res,next){
-    User.findById(req.session.userId , '-password')
+//profile data
+router.get('/profile',function(req,res,next){
+    User.findById(req.session.userId,'-password -projects')
     .exec(function(error, user){
-        if(error){
-            return next(error);
-        }
-        else{
-            if (user === null) {
-                var err = new Error('Not authorized! Go back!');
-                err.status = 400;
-                return next(err);
-              } 
-            else{
-                console.log(user);
-            }
-        }
+        return res.send(user);
+        //return res.render(profile.html,user)
     })
+    
 })
+
+
+//creating new project
+router.post('/projects',function(req,res,){
+    var projData={
+        proj_name : req.body.proj_name,
+        creator : req.session.userId,
+        goal : req.body.goal,
+        received : 0,
+        timer_vot : req.body.timer_vot,
+        timer_fund : req.body.timer_fund,
+        back_ins : req.body.back_ins
+
+    }
+    project = new Project(projData);
+    project.save();
+    const name =projData.proj_name ;
+
+    var escData={
+        proj_name : req.body.proj_name,
+        back_ins : req.body.back_ins
+        }
+    escrow = new Escrow(escData);
+    escrow.save();
+    
+})
+
+//donation
+router.post('/donate',function(req,res){
+    var donData={
+        did:req.session.userId,
+        amount:req.body.amount
+    }
+    Escrow.findOneAndUpdate(
+        { proj_name : req.body.proj_name },
+        { $push : { donators : donData } },
+        function(error,success) {
+            if(error) {
+                console.log(error)
+            }
+            else{
+                console.log(success)
+            }
+        });
+    Project.findOneAndUpdate(
+        { proj_name : req.body.proj_name },
+        { $push : { donators : donData } },
+        function(error,success) {
+            if(error) {
+                console.log(error)
+            }
+            else{
+                console.log(success)
+            }
+        } 
+    )
+    User.findByIdAndUpdate(req.session.userId,
+        {$inc: { balance : -1*req.body.amount }},
+        function(error,success){
+            if(error){
+                console.log(error)
+            }
+            else{
+                console.log(success)
+            }
+        }); 
+    })
 
 
 

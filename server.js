@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 const{ contract } = require('./contracts/app')
 
+const swig = require('swig');
+
 var MongoStore = require('connect-mongo')(session);
 
 //connect to MongoDB
@@ -28,6 +30,15 @@ app.use(session({
       mongooseConnection: db
     })
   }));
+
+
+//view engine setup
+app.engine('html',swig.renderFile);
+app.set('views'),path.join(__dirname,'views');
+app.set('view engine','html');
+app.set('view engine','jade');
+app.set('view cache',false);
+swig.setDefaults({ cache:false, varControls:['<%=','%=>']});
 
 // parse incoming requests
 app.use(bodyParser.json());

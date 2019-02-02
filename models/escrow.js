@@ -5,14 +5,7 @@ var mongoose = require('mongoose');
 var EscrowSchema = new mongoose.Schema({
     proj_name : String,
     proj_id : String,
-    donators : {
-        did : [{
-            type : String
-        }],
-        amount : [{
-            type : Number
-        }]
-    },
+    donators : [{did : String, amount : Number}],
     back_ins : Number 
 });
 
