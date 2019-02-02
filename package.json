@@ -17,6 +17,10 @@
   },
   "homepage": "https://github.com/sephiroth7712/GoldenWind#readme",
   "dependencies": {
-    "express": "^4.16.4"
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "http": "0.0.0",
+    "mongoose": "^5.4.9",
+    "path": "^0.12.7"
   }
 }
