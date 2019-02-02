@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
+var path = require("path");
 
 // GET route for reading data
 router.get('/', function (req, res, next) {
@@ -29,6 +30,7 @@ router.get('/', function (req, res, next) {
       }
   })
 
+//Registering a new user
 router.post('/register',function(req,res,next){
     if(req.body.email && req.body.password && req.body.name && req.body.balance && req.body.contact){
         var userData={
@@ -36,7 +38,8 @@ router.post('/register',function(req,res,next){
             email :req.body.email,
             contact : req.body.contact,
             password : req.body.password,
-            balance : req.body.balance
+            balance : req.body.balance,
+            public_address : req.body.address
         }
         User.create(userData, function(error, user){
             if(error){
@@ -82,4 +85,27 @@ router.get('/logout', function (req, res, next) {
     }
   });
 
-  module.exports = router;
+
+//creating new project
+router.get('/projects',function(req,res,next){
+    User.findById(req.session.userId , '-password')
+    .exec(function(error, user){
+        if(error){
+            return next(error);
+        }
+        else{
+            if (user === null) {
+                var err = new Error('Not authorized! Go back!');
+                err.status = 400;
+                return next(err);
+              } 
+            else{
+                console.log(user);
+            }
+        }
+    })
+})
+
+
+
+module.exports = router;

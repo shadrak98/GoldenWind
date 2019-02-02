@@ -5,6 +5,7 @@ var http = require("http").Server(app);
 var path = require("path");
 var bodyParser = require('body-parser');
 var session = require('express-session');
+const{ contract } = require('./contracts/app')
 
 var MongoStore = require('connect-mongo')(session);
 
