@@ -2,11 +2,9 @@ var mongoose = require('mongoose');
 
 
 //schema for users
-module.exports = mongoose.model("Project",{
+module.exports = mongoose.model("Escrow",{
     proj_name : String,
-    creators : [{
-        type : String
-    }],
+    proj_id : String,
     donators : {
         did : [{
             type : String
@@ -15,9 +13,5 @@ module.exports = mongoose.model("Project",{
             type : Number
         }]
     },
-    goal : Number,
-    received : Number,
-    timer_vot : Date,
-    timer_fund : Date,
     back_ins : Number 
 });

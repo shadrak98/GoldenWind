@@ -7,3 +7,5 @@ var path = require("path");
 
 var User = require('./models/user');
 var Project = require('./models/project');
+var Escrow = reuire('./models/escrow');
+
