@@ -17,10 +17,14 @@
   },
   "homepage": "https://github.com/sephiroth7712/GoldenWind#readme",
   "dependencies": {
+    "bcrypt": "^3.0.3",
     "body-parser": "^1.18.3",
+    "connect-mongo": "^2.0.3",
     "express": "^4.16.4",
+    "express-session": "^1.15.6",
     "http": "0.0.0",
     "mongoose": "^5.4.9",
+    "nodemon": "^1.18.9",
     "path": "^0.12.7"
   }
 }

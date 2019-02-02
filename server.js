@@ -1,44 +1,59 @@
 var express = require("express");
 var app = express();
+var mongoose = require('mongoose');
 var http = require("http").Server(app);
 var path = require("path");
 var bodyParser = require('body-parser');
 var session = require('express-session');
-var router = express.Router();
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+var MongoStore = require('connect-mongo')(session);
 
+//connect to MongoDB
+mongoose.connect('mongodb://localhost/GoldenWind');
+var db = mongoose.connection;
 
-var User = require('./models/user');
-var Project = require('./models/project');
-var Escrow = require('./models/escrow');
-
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
-
-app.post('/users', function(req, res){
-    var data = req.body;
-   
-    User.findOne({email: data.email}, (err,user){
-        if(err) {
-            return err;
-        }
-        var dbo = db.db('Goldenwind');
-        if(!user){
-            user = {name: user.name, email: user.email, contact: user.contact};
-            dbo.collection('User').insertOne(user, function(err, res){
-                if(err) {
-                    return err;
-                } else {
-                    console.log("Data inserted into database successfully.");
-                }
-            });
-            } else {
-            res.status(500).send('Account already registered.');
-        }
-    })
+//handle mongo error
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+  // we're connected!
 });
 
-app.listen(3000);
-console.log('Server is running.');
+//use sessions for tracking logins
+app.use(session({
+    secret: 'work hard',
+    resave: true,
+    saveUninitialized: false,
+    store: new MongoStore({
+      mongooseConnection: db
+    })
+  }));
+
+// parse incoming requests
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// serve static files from template
+app.use(express.static(__dirname + '/views'));
+
+// include routes
+var routes = require('./routes/router');
+app.use('/', routes);
+
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+    var err = new Error('File Not Found');
+    err.status = 404;
+    next(err);
+  });
+
+// error handler
+// define as the last app.use callback
+app.use(function (err, req, res, next) {
+    res.status(err.status || 500);
+    res.send(err.message);
+  });
+
+//creating a server
+var server = http.listen(3020, () => {
+    console.log("Well done, now I am listening on ", server.address().port)
+})

@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 
 //schema for users
-module.exports = mongoose.model("Project",{
+var ProjectSchema = new mongoose.Schema({
     proj_name : String,
     creators : [{
         type : String
@@ -21,3 +21,6 @@ module.exports = mongoose.model("Project",{
     timer_fund : Date,
     back_ins : Number 
 });
+
+var Project = mongoose.model('Project', ProjectSchema);
+module.exports = Project;

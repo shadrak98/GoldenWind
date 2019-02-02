@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 
 //schema for users
-module.exports = mongoose.model("Escrow",{
+var EscrowSchema = new mongoose.Schema({
     proj_name : String,
     proj_id : String,
     donators : {
@@ -15,3 +15,6 @@ module.exports = mongoose.model("Escrow",{
     },
     back_ins : Number 
 });
+
+var Escrow = mongoose.model('Escrow',EscrowSchema);
+module.exports = Escrow;
