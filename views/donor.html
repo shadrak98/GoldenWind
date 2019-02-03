@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container" style="width:800px; margin:300px auto;">
+<div class="jumbotron">
+  <form action="/donate" method="POST">
+    <div class="form-group">
+      <label for="name">Project Name:</label>
+      <input type="name" class="form-control" id="proj_name" value="{{name}}" readonly name="proj_name">
+    </div>
+    <div class="form-group">
+      <label for="amt">Amount:</label>
+      <input type="number" class="form-control" id="pwd" placeholder="Enter Amount" name="amount">
+    </div>
+    <button type="submit" class="btn btn-success">Donate</button>
+  </form>
+</div>
+</div>
+</body>
+</html>

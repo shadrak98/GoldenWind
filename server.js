@@ -34,11 +34,11 @@ app.use(session({
 
 //view engine setup
 app.engine('html',swig.renderFile);
-app.set('views'),path.join(__dirname,'views');
+app.set('views', path.join(__dirname, 'views'))
 app.set('view engine','html');
 app.set('view engine','jade');
 app.set('view cache',false);
-swig.setDefaults({ cache:false, varControls:['<%=','%=>']});
+//swig.setDefaults({ cache:false, varControls:['<%=','%=>']});
 
 // parse incoming requests
 app.use(bodyParser.json());
@@ -66,6 +66,6 @@ app.use(function (err, req, res, next) {
   });
 
 //creating a server
-var server = http.listen(3020, () => {
+var server = http.listen(3020, '0.0.0.0',() => {
     console.log("Well done, now I am listening on ", server.address().port)
 })

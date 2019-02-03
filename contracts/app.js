@@ -9,6 +9,6 @@ web3.eth.defaultAccount = web3.eth.coinbase;
 //  console.log(contract.balanceOf('0x0b8a9fa90027f293daf51cab2504a5cdd0f1931a'))
 //  //console.log(contract.setAccount('0x871a5599e7a45bc0775dfbd46f0de956e1f5c8f0'))
 
-//  console.log(contract.balanceOf('0x31454151bf428f6863f70516f07cecc98e96085e'))
-
+  var val= (contract.balanceOf('0x31454151bf428f6863f70516f07cecc98e96085e'))
+    console.log(val.c[0])
 module.exports = {contract}
