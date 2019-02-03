@@ -17,8 +17,18 @@ The Distributed nature of Blockchain and the use of cryptocurrencies and smart c
 BitbyBit offers a Backer Insurance - a security mechanism that holds campaign funds in smart contract governed by backer vote.
 This financial incentive holds creators accountable to their promised timelines and provides a basic security mechanism for backers.
 
-### Flow:
+To start with the project, Creators will be credited with some fixed tokens. Each campaign require tokens to deposit as insurance. This deposit can be earned back when creators stick to the promises made and achieve their milestone one-by-one. The deposit gets stored in an escrow account as tokens. With the help of smart contracts creator can get their tokens back or get in loss when fail to achieve their milestone.
 
+Another solution to securing investors money is back insurance. Once funding is successful depending on user's choice smart contract will send a predefined percentage of goal to escrow account. This money is given to creators on completion of certain predefined deliverables on a fixed time. If creator fails, investors can vote to decide what happens with the escrow account.
+
+### Built with:
+* Solidity
+* Nodejs 
+* Expressjs (Framework)
+* Bootsrap 
+* Web3
+* Ganache
+* Truffle
 
 ### Created By
 * [Roshan James](https://github.com/sephiroth7712/)
