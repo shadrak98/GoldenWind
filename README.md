@@ -15,6 +15,8 @@ The main problem facing crowdfunding is issue of trust. Backers are repeatedly b
 The Distributed nature of Blockchain and the use of cryptocurrencies and smart contracts allow the network to grow, self-govern, and distribute in open and merit-based way. BitbyBit focuses on product-based crowdfunding rather than equity-based crowdfunding.
 
 BitbyBit offers a Backer Insurance - a security mechanism that holds campaign funds in smart contract governed by backer vote.
+This financial incentive holds creators accountable to their promised timelines and provides a basic security mechanism for backers.
+
 ### Flow:
 
 
